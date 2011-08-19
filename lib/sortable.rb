@@ -140,7 +140,7 @@ module Huberry
       options[:scope].each do |scope|
         options[:conditions].first << " AND (#{table_name}.#{scope} = ?)"
         
-        unless instance_methods.include?("#{scope}_with_sortable=")
+        unless instance_methods.include?((/^1\.8/ === RUBY_VERSION) ? "#{scope}_with_sortable=" : "#{scope}_with_sortable=".to_sym )
           define_method "#{scope}_with_sortable=" do |value|
             sortable_scope_changes << scope unless sortable_scope_changes.include?(scope) || new_record? || value.to_s == send(scope).to_s || !self.class.sortable_lists.any? { |list_name, configuration| configuration[:scope].include?(scope) }
             send("#{scope}_without_sortable=".to_sym, value)

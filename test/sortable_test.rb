@@ -258,7 +258,7 @@ class SortableTest < Test::Unit::TestCase
     assert @todo.save
     @todo.reload
     @todo.project_id = 2
-    assert [:project_id], @todo.sortable_scope_changes
+    assert_equal [:project_id], @todo.sortable_scope_changes
   end
   
   def test_should_raise_invalid_sortable_list_error_if_list_does_not_exist
